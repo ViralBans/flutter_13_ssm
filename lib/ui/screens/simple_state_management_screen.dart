@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-import '../../business/functions.dart';
 import '../../business/ssm.dart';
+import '../../data/services.dart';
 
 class SimpleStateManagementScreen extends StatefulWidget {
   const SimpleStateManagementScreen({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _SimpleStateManagementScreenState
         create: (_) => SimpleStateManagement(),
         child: SafeArea(
           child: FutureBuilder(
-            future: GetIt.I.get<ProductListGenerate>().getFruitList(),
+            future: GetIt.I.get<DataNetwork>().getFruitList(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -69,7 +69,7 @@ class _SimpleStateManagementScreenState
                         Expanded(
                           child: ListView(
                             children: GetIt.I
-                                .get<ProductListGenerate>()
+                                .get<DataNetwork>()
                                 .fl
                                 .map((element) {
                               return Card(

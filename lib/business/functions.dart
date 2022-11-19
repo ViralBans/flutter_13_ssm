@@ -1,22 +1,26 @@
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data/services.dart';
-import '../models/fruit_model.dart';
+import '../models/product_model.dart';
 
 @LazySingleton()
-class ProductListGenerate {
-  late List<Fruit> fl;
+class Basket {
+  late final Map<int, Product> _basketList = {};
 
-  Future<List<Fruit>> getFruitList() async {
-    try {
-      Response response = await Dio()
-          .get(Basket.link);
-      fl =
-          response.data.map<Fruit>((fruits) => Fruit.fromJson(fruits)).toList();
-      return fl;
-    } on DioError catch (e) {
-      throw Exception(e.error);
-    }
+  List<String> ls = [];
+
+  void addItem(int id, String name, double cost) {
+    _basketList.addAll({id : Product(id: id, name: name, cost: cost)});
+  }
+
+  void deleteItem(int id) {
+    _basketList.remove(id);
+  }
+
+  bool checkItemInBasket(int id) {
+    return _basketList.containsKey(id);
+  }
+
+  int getBasketItems() {
+    return _basketList.length;
   }
 }
